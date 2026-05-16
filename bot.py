@@ -1,4 +1,3 @@
-import asyncio
 import os
 import schedule
 import time
@@ -177,7 +176,7 @@ async def _track_chat(update: Update, context: ContextTypes.DEFAULT_TYPE) -> Non
 
 # ---------- Main ----------
 
-async def main() -> None:
+def main() -> None:
     app = ApplicationBuilder().token(BOT_TOKEN).build()
 
     # Track chats for scheduled messages
@@ -199,13 +198,8 @@ async def main() -> None:
     _start_scheduler(app)
 
     print("Bot is running...")
-    async with app:
-        await app.initialize()
-        await app.start()
-        await app.updater.start_polling()
-        await app.updater.idle()
-        await app.stop()
+    app.run_polling()
 
 
 if __name__ == "__main__":
-    asyncio.run(main())
+    main()
